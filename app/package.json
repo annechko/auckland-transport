@@ -1,6 +1,7 @@
 {
   "name": "deckgl-examples-map-tile",
   "version": "0.0.0",
+  "homepage": "/auckland-transport",
   "private": true,
   "license": "MIT",
   "scripts": {
