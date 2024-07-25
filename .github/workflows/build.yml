@@ -68,9 +68,11 @@ jobs:
       - name: Download fresh data
         run: |
           python data/sync.py
+      - name: Create data dir
+        run: mkdir -p app/dist/upload && sudo chown -R 1000:1000 app/dist/upload
       - name: Copy to build
         run: |
-          cp -r data/upload/* ./app/dist
+          cp -r data/upload ./app/dist
             
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
