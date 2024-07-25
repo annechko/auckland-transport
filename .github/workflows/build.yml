@@ -68,15 +68,14 @@ jobs:
       - name: Download fresh data
         run: |
           python data/sync.py
+      - name: Copy to build
+        run: |
+          cp -r data/upload/* ./app/dist
             
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './app/dist'
-      - name: Upload data
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './data/upload'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
