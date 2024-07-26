@@ -71,9 +71,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r data/requirements.txt
 
-      - name: Download gtfs # todo use cache, download once a day
-        run: |
-          wget https://gtfs.at.govt.nz/gtfs.zip && unzip gtfs.zip
+      - name: Cache gtfs static
+        id: gtfs-cache
+        uses: actions/cache@v3
+        with:
+          path: ./data/gtfs
+          key: gtfs_$(date +'%d/%m/%Y')
+      - name: Create gtfs static dirs
+        run: mkdir -p ./data/gtfs && sudo chown -R $USER ./data/gtfs
+      - name: Download gtfs
+        run: wget -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip && unzip -d ./data/gtfs gtfs.zip
       - name: Download fresh data
         env:
           AT_KEY: ${{ secrets.AT_KEY }}

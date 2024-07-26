@@ -9,5 +9,5 @@ install:
 	docker-compose run  --rm atn npm install
 
 ci-build:
-	docker-compose run  --rm atn npm install
+	docker-compose run  --rm atn npm install --omit=dev
 	docker-compose run  --rm atn npm run build
