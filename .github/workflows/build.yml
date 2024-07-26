@@ -82,13 +82,19 @@ jobs:
       - name: Create gtfs static dirs
         run: mkdir -p ./data/gtfs && sudo chown -R $USER ./data/gtfs
 
-      - name: Download gtfs
-        run: wget -q -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip && unzip ./data/gtfs/gtfs.zip -d ./data/gtfs
+      - if: ${{ steps.gtfs-cache.outputs.cache-hit != 'true' }}
+        name: Download gtfs zip if not exists
+        continue-on-error: true
+        run: wget -q -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip
+      - name: Unzip gtfs
+        run:  unzip ./data/gtfs/gtfs.zip -d ./data/gtfs
       - name: Download fresh data
         env:
           AT_KEY: ${{ secrets.AT_KEY }}
         run: |
           python data/sync.py
+      - name: Remove unzipped gtfs
+        run: rm -rf ./data/gtfs/*.txt
 
       - name: Create build dir
         run: mkdir -p app/build && sudo chown -R $USER app/build
