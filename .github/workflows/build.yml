@@ -87,7 +87,7 @@ jobs:
         continue-on-error: true
         run: wget -q -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip
       - name: Unzip gtfs
-        run:  unzip ./data/gtfs/gtfs.zip -d ./data/gtfs
+        run:  unzip -o ./data/gtfs/gtfs.zip -d ./data/gtfs
       - name: Download fresh data
         env:
           AT_KEY: ${{ secrets.AT_KEY }}
