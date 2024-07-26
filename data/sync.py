@@ -67,7 +67,7 @@ copy.dropna(subset=['stop_lat', 'stop_lon'], inplace=True)
 
 # data preparation - remove unused data columns:
 copy=copy.drop(['alert.header_text.translation','alert.description_text.translation',
-                'alert.url.translation','stop_id','id','alert.cause','trip.trip_id',
+                'alert.url.translation','stop_id','id','alert.cause',
                 'alert.active_period','alert.informed_entity','timestamp','alert.effect',
                 ], axis=1)
 
