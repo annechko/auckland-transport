@@ -70,12 +70,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r data/requirements.txt
 
+      - name: Set up date variable
+        id: date
+        run: echo "TODAY_DATE=$(date +'%d-%m-%Y')" >> $GITHUB_ENV
       - name: Cache gtfs static
         id: gtfs-cache
         uses: actions/cache@v3
         with:
           path: ./data/gtfs
-          key: gtfs_${{ $(date +'%d/%m/%Y') }}
+          key: gtfs_${{ env.TODAY_DATE }}
       - name: Create gtfs static dirs
         run: mkdir -p ./data/gtfs && sudo chown -R $USER ./data/gtfs
 
