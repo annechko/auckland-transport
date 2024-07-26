@@ -1,6 +1,6 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-
+import {CSVLoader} from '@loaders.gl/csv';
 import DeckGL from '@deck.gl/react';
 import type {MapViewState, Position} from '@deck.gl/core';
 import {MapView} from '@deck.gl/core';
@@ -9,9 +9,9 @@ import {BitmapLayer, PathLayer} from '@deck.gl/layers';
 import {IconLayer, IconLayerProps, PickingInfo} from "deck.gl";
 
 const INITIAL_VIEW_STATE: MapViewState = {
-  latitude: 47.65,
-  longitude: 7,
-  zoom: 5,
+  latitude: -36.9,
+  longitude: 174.8,
+  zoom: 10,
   maxZoom: 20,
   maxPitch: 89,
   bearing: 0
@@ -36,11 +36,12 @@ const LINK_STYLE: React.CSSProperties = {
 const devicePixelRatio = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
 
 type Data = {
-  coordinates: [longitude: number, latitude: number];
-  name: string;
-  class: string;
-  mass: number;
-  year: number;
+  stop_lat: number;
+  stop_lon: number;
+  stop_code: string;
+  alert_text: string;
+  period_start: string;
+  period_end: string;
 };
 
 function getTooltip({object}: PickingInfo<Data>) {
@@ -48,7 +49,7 @@ function getTooltip({object}: PickingInfo<Data>) {
     return
   }
   return {
-    html: `<h2>Message:</h2> <div>${object.name}</div><div>${object.year}</div>`,
+    html: `<div>${object.alert_text}</div><div>${object.period_start}</div><div>${object.period_end}</div>`,
     style: {
       fontSize: '0.8em'
     }
@@ -77,8 +78,17 @@ export default function App({
 }) {
   const layerProps: IconLayerProps<Data> = {
     id: 'icon',
-    data: './data/meteorites.json',
-    getPosition: d => d.coordinates,
+    data: './upload/alerts.csv',
+    loaders: [CSVLoader],
+    loadOptions: {
+      csv: {
+        header: true,
+        skipEmptyLines: true
+      }
+    },
+    getPosition: (d: Data) => {
+      return [d.stop_lon, d.stop_lat]
+    },
     pickable: true,
     getIcon: (d, {index}) => ({
       url: svgToDataURL(createSVGIcon(index)),
