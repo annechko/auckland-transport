@@ -75,12 +75,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ./data/gtfs
-          key: gtfs_$(date +'%d/%m/%Y')
+          key: gtfs_${{ $(date +'%d/%m/%Y') }}
       - name: Create gtfs static dirs
         run: mkdir -p ./data/gtfs && sudo chown -R $USER ./data/gtfs
 
       - name: Download gtfs
-        run: wget -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip && unzip ./data/gtfs/gtfs.zip -d ./data/gtfs
+        run: wget -q -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip && unzip ./data/gtfs/gtfs.zip -d ./data/gtfs
       - name: Download fresh data
         env:
           AT_KEY: ${{ secrets.AT_KEY }}

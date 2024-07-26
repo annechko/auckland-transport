@@ -5,7 +5,7 @@ import time
 import os
 
 FILE_ALERTS='./data/upload/alerts.csv'
-FILE_STOPS='./stops.txt'
+FILE_STOPS='./data/gtfs/stops.txt'
 
 url = "https://api.at.govt.nz/realtime/legacy/servicealerts"
 
