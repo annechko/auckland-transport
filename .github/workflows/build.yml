@@ -70,10 +70,10 @@ jobs:
           python data/sync.py
 
       - name: Create build dir
-        run: mkdir -p app/build && sudo chown -R 1000:1000 app/build
+        run: mkdir -p app/build && sudo chown -R $USER app/build
       - name: Copy data
         run: |
-          cp -r data/upload/* ./app/build
+          cp -r data/upload/ ./app/build
       - name: Copy assets
         run: |
           cp -r ./app/dist/* ./app/build
