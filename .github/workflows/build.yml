@@ -68,16 +68,21 @@ jobs:
       - name: Download fresh data
         run: |
           python data/sync.py
-      - name: Create data dir
-        run: mkdir -p app/dist/upload && sudo chown -R 1000:1000 app/dist/upload
-      - name: Copy to build
+
+      - name: Create build dir
+        run: mkdir -p app/build && sudo chown -R 1000:1000 app/build
+      - name: Copy data
         run: |
-          cp -r data/upload ./app/dist
+          cp -r data/upload/* ./app/build
+      - name: Copy assets
+        run: |
+          cp -r ./app/dist/* ./app/build
             
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './app/dist'
+          path: './app/build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
