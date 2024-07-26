@@ -48,7 +48,8 @@ jobs:
           login-server: ${{ env.REGISTRY_HOST }}
           username: ${{ github.actor }}
           password: ${{ github.token }}
-
+      - name: Test
+        run: unzip -h
       - name: Cache node packages
         id: node-cache
         uses: actions/cache@v3
@@ -79,6 +80,7 @@ jobs:
           key: gtfs_$(date +'%d/%m/%Y')
       - name: Create gtfs static dirs
         run: mkdir -p ./data/gtfs && sudo chown -R $USER ./data/gtfs
+
       - name: Download gtfs
         run: wget -P ./data/gtfs https://gtfs.at.govt.nz/gtfs.zip && unzip -d ./data/gtfs gtfs.zip
       - name: Download fresh data
