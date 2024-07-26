@@ -11,7 +11,7 @@ url = "https://api.at.govt.nz/realtime/legacy/servicealerts"
 
 hdr = {
 'Cache-Control': 'no-cache',
-'Ocp-Apim-Subscription-Key': s.environ.get('AT_KEY'),
+'Ocp-Apim-Subscription-Key': os.environ.get('AT_KEY'),
 }
 req = urllib.request.Request(url, headers=hdr)
 
