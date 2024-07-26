@@ -3,7 +3,7 @@ name: Deploy static content to Pages
 
 on:
   schedule:
-    - cron: "21 6-18/2 * * *"   # At minute 21 past every 2nd hour from 6 through 18.
+    - cron: "33 6-18/6 * * *"
 
   # Runs on pushes targeting the default branch
   push:
