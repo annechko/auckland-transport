@@ -63,6 +63,8 @@ copy['period_start'] = copy['period_start'] + pd.Timedelta('12:00:00')
 copy['period_start'] = copy['period_start'].dt.strftime('%d/%m/%Y, %H:%M:%S')
 copy['period_end'] = copy['period_end'].dt.strftime('%d/%m/%Y, %H:%M:%S')
 
+copy.dropna(subset=['stop_lat', 'stop_lon'], inplace=True)
+
 # data preparation - remove unused data columns:
 copy=copy.drop(['alert.header_text.translation','alert.description_text.translation',
                 'alert.url.translation','stop_id','id','alert.cause','trip.trip_id',

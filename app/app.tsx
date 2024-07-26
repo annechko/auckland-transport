@@ -7,6 +7,7 @@ import {MapView} from '@deck.gl/core';
 import {TileLayer} from '@deck.gl/geo-layers';
 import {BitmapLayer, PathLayer} from '@deck.gl/layers';
 import {IconLayer, IconLayerProps, PickingInfo} from "deck.gl";
+import './app.css';
 
 const INITIAL_VIEW_STATE: MapViewState = {
   latitude: -36.9,
@@ -49,7 +50,7 @@ function getTooltip({object}: PickingInfo<Data>) {
     return
   }
   return {
-    html: `<div>${object.alert_text}</div><div>${object.period_start}</div><div>${object.period_end}</div>`,
+    html: `<div class="tip-title">${object.alert_text}</div><div><span class="tip-point">From: </span>${object.period_start}</div><div><span  class="tip-point">To: </span>${object.period_end}</div>`,
     style: {
       fontSize: '0.8em'
     }
